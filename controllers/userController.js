@@ -1,3 +1,6 @@
+const mysql = require("../db/mysql");
+const userService = require("../service/userService");
+
 exports.list = function (req, res) {
   res.json({
     //发送json数据类型
@@ -17,3 +20,12 @@ exports.list = function (req, res) {
 exports.deleteUser = function (req, res) {
   res.send("Got a DELETE request at /user"); //发送各种类型的响应
 }
+
+exports.getuser = function (req, res) {
+  mysql.query(userService.userAll).then((data) => {
+    let jsonData = JSON.parse(JSON.stringify(data));
+    res.json({
+      data: jsonData,
+    });
+  });
+};

@@ -3,6 +3,8 @@ const userController = require("../controllers/userController");
 
 const router = express.Router();
 
+router.get("/user/json", userController.getuser);
+
 router.get("/list", userController.list);
 
 router.delete("/user", userController.deleteUser);
