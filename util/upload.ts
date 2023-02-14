@@ -7,7 +7,7 @@ const memoryDest = path.join(__dirname, "../public/images");
 
 const storage = multer.diskStorage({
   // 文件存储位置
-  destination: (req, file, cb) => {
+  destination: (req:any, file:any, cb:any) => {
     // 校验文件夹是否存在，如果不存在则创建一个
     const isExists = fs.existsSync(memoryDest);
     if (!isExists) {
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     }
     cb(null, memoryDest);
   },
-  filename: (req, file, cb) => {
+  filename: (req:any, file:any, cb:any) => {
     // 生成唯一文件名
     const uid = uuid.v1();
     // 获取文件扩展名
@@ -25,14 +25,14 @@ const storage = multer.diskStorage({
 });
 
 // 过滤文件
-function fileFilter(req, file, callback) {
+function fileFilter(req:any, file:any, callback:any) {
   if (!file) {
     callback(null, false);
   } else {
     callback(null, true);
   }
 }
-const upload = multer({
+const uploadExport = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
@@ -40,4 +40,4 @@ const upload = multer({
   },
 }).single("file"); //上传的fieldname必须为file
 
-module.exports = upload;
+module.exports = uploadExport;

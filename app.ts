@@ -1,6 +1,8 @@
+export {} 
+
 const express = require("express");
 const bodyParser = require("body-parser"); // 引入body-parser模块
-var path = require("path");
+const path = require("path");
 const cors = require("cors");
 
 const routes = require("./routes");
