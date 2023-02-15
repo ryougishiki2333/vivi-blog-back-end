@@ -1,9 +1,6 @@
-
-
-const upload = require("../util/upload")
-
-const express = require("express");
-const userController = require("../controllers/userController");
+import upload from "../util/upload";
+import express from "express";
+import userController from "../controllers/userController";
 
 const router = express.Router();
 
@@ -19,5 +16,5 @@ router.post("/upload", upload, (req:any, res:any, next:any) => {
   res.send("success");
 });
 
-module.exports = router;
+export default router;
 

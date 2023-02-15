@@ -6,4 +6,4 @@ const jwtAuth = jwt({
   algorithms: ["HS256"], //签名算法
 }).unless({ path: ["/api/login", "/api/register"] }); // unless 设置jwt认证白名单
 
-module.exports = jwtAuth;
+export default jwtAuth;

@@ -1,1 +1,3 @@
-exports.userAll = `SELECT * FROM user;`
+const userAll = `SELECT * FROM user;`
+
+export default {userAll}

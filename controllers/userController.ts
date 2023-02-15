@@ -1,7 +1,7 @@
-const mysql = require("../db/mysql");
-const userService = require("../service/userService");
+import mysql from "../db/mysql";
+import userService from "../service/userService";
 
-exports.list = function (req, res) {
+const list = function (req:any, res:any) {
   res.json({
     //发送json数据类型
     list: [
@@ -17,11 +17,11 @@ exports.list = function (req, res) {
   });
 }
 
-exports.deleteUser = function (req, res) {
+const deleteUser = function (req:any, res:any) {
   res.send("Got a DELETE request at /user"); //发送各种类型的响应
 }
 
-exports.getuser = function (req, res) {
+const getuser = function (req:any, res:any) {
   mysql.query(userService.userAll).then((data) => {
     let jsonData = JSON.parse(JSON.stringify(data));
     res.json({
@@ -29,3 +29,6 @@ exports.getuser = function (req, res) {
     });
   });
 };
+
+
+export default { list, deleteUser, getuser } 

@@ -1,11 +1,11 @@
 
 
-const express = require("express");
-const bodyParser = require("body-parser"); // 引入body-parser模块
-const path = require("path");
-const cors = require("cors");
+import express from "express";
+import bodyParser from "body-parser"; // 引入body-parser模块
+import path from "path";
+import cors from "cors";
 
-const routes = require("./routes");
+import routes from "./routes";
 
 const app = express();
 

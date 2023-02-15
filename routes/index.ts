@@ -1,11 +1,10 @@
 
-const express = require('express')
-const userRouter = require("./user");
-const loginRouter = require("./login");
+import express from 'express';
+import userRouter from "./user";
+import loginRouter from "./login";
+import jwtAuth from "../util/user-jwt";
 
 const router = express.Router();
-
-const jwtAuth = require("../util/user-jwt");
 
 router.use(jwtAuth); 
 
@@ -37,4 +36,4 @@ router.use((err:any, req:any, res:any, next:any) => {
   }
 });
 
-module.exports = router;
+export default router;

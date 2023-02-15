@@ -1,7 +1,7 @@
 
-const express = require('express')
-const loginController = require('../controllers/loginController');
-const jwt = require("jsonwebtoken");
+import express from 'express';
+import loginController from '../controllers/loginController';
+import jwt from "jsonwebtoken";
 
 const router = express.Router(); //模块化路由
 
@@ -27,5 +27,5 @@ router.post("/login", (req:any, res:any, next:any) => {
 });
 
 
-module.exports = router;
+export default router;
 

@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
-const uuid = require("uuid");
+import fs from "fs";
+import path from "path";
+import multer from "multer";
+import uuid from "uuid";
 
 const memoryDest = path.join(__dirname, "../public/images");
 
@@ -40,4 +40,4 @@ const uploadExport = multer({
   },
 }).single("file"); //上传的fieldname必须为file
 
-module.exports = uploadExport;
+export default uploadExport;

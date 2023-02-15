@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+import mysql from "mysql";
 const pool = mysql.createPool({
   connectionLimit: 10, //最大连接数，默认为10
   host: "localhost", // 数据库服务器地址
@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 
 class Mysql {
   constructor() {}
-  query(sql) {
+  query(sql:string) {
     return new Promise((resolve, reject) => {
       pool.getConnection(function (err, connection) {
         if (err) {
@@ -30,4 +30,4 @@ class Mysql {
   }
 }
 
-module.exports = new Mysql();
+export default new Mysql();
