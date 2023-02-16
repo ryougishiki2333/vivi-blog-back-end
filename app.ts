@@ -1,11 +1,10 @@
-
-
 import express from "express";
 import bodyParser from "body-parser"; // 引入body-parser模块
 import path from "path";
 import cors from "cors";
-
 import routes from "./routes";
+import db from "./database/mysql"
+
 
 const app = express();
 
@@ -20,9 +19,19 @@ app.use(cors()); // 注入cors模块解决跨域
 
 app.use("/", routes);
 
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
+
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Vivi application." });
 });
+
+
 
 const PORT = 4000;
 app.listen(PORT, () => {
