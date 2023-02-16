@@ -1,4 +1,7 @@
 import mysql from "mysql";
+
+
+
 const pool = mysql.createPool({
   connectionLimit: 10, //最大连接数，默认为10
   host: "localhost", // 数据库服务器地址

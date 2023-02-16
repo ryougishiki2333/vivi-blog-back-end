@@ -6,7 +6,7 @@ import jwtAuth from "../util/user-jwt";
 
 const router = express.Router();
 
-router.use(jwtAuth); 
+// router.use(jwtAuth); 
 
 router.use("/api", userRouter); // 注入用户路由模块
 router.use("/api", loginRouter); // 注入登录路由模块
