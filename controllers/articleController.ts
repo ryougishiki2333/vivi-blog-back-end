@@ -1,6 +1,6 @@
 import mysqlObject from "../database/mysql";
 import { Op } from "sequelize"
-const Tutorial = mysqlObject.tutorials;
+const Tutorial = mysqlObject.article;
 // Create and Save a new Tutorial
 const create = (req: any, res: any) => {
   // Validate request

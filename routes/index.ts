@@ -1,17 +1,13 @@
 
 import express from 'express';
-import tutorialsRouter from "./tutorials";
-// import userRouter from "./user";
-// import loginRouter from "./login";
+import articleRouter from "./article";
 import jwtAuth from "../util/user-jwt";
 
 const router = express.Router();
 
 // router.use(jwtAuth); 
 
-// router.use("/api", userRouter); // 注入用户路由模块
-// router.use("/api", loginRouter); // 注入登录路由模块
-router.use("/api/tutorials", tutorialsRouter);
+router.use("/api/article", articleRouter);
 
 // // 自定义统一异常处理中间件，需要放在代码最后
 // router.use((err:any, req:any, res:any, next:any) => {

@@ -1,4 +1,4 @@
-import { create, findAll, findOne, update, deleteT, deleteAll, findAllPublished } from "../controllers/tutorialController";
+import { create, findAll, findOne, update, deleteT, deleteAll, findAllPublished } from "../controllers/articleController";
 import express from "express";
 
 const router = express.Router();

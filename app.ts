@@ -27,12 +27,6 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Vivi application." });
-});
-
-
-
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
