@@ -1,4 +1,3 @@
-import mysql from "mysql";
 import mysqlConfig from "./databaseConfig"
 import { Sequelize } from "sequelize"
 import tutorialFunc from "../models/tutorialFunc"
