@@ -1,15 +1,9 @@
-import { STRING, INTEGER, BLOB } from "sequelize"
+import { STRING } from "sequelize"
 
 const tagModelFunc = (sequelize:any) => {
-  const Tag = sequelize.define("Article", {
-    title: {
+  const Tag = sequelize.define("Tag", {
+    name: {
       type: STRING
-    },
-    content: {
-      type: STRING
-    },
-    articleState: {
-      type: INTEGER
     }
   });
 

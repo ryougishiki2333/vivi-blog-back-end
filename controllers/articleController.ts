@@ -1,7 +1,7 @@
 import mysqlObject from "../database/mysql";
 import { Op } from "sequelize"
-const Tutorial = mysqlObject.article;
-// Create and Save a new Tutorial
+const Article = mysqlObject.article;
+// Create and Save a new Article
 const create = (req: any, res: any) => {
   // Validate request
   if (!req.body.title) {
@@ -11,22 +11,22 @@ const create = (req: any, res: any) => {
     return;
   }
 
-  // Create a Tutorial
+  // Create a Article
   const tutorial = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
   };
 
-  // Save Tutorial in the database
-  Tutorial.create(tutorial)
+  // Save Article in the database
+  Article.create(tutorial)
     .then((data: any) => {
       res.send(data);
     })
     .catch((err: any) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial.",
+          err.message || "Some error occurred while creating the Article.",
       });
     });
 };
@@ -36,7 +36,7 @@ const findAll = (req: any, res: any) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Tutorial.findAll({ where: condition })
+  Article.findAll({ where: condition })
     .then((data: any) => {
       res.send(data);
     })
@@ -51,19 +51,19 @@ const findAll = (req: any, res: any) => {
 const findOne = (req:any, res:any) => {
   const id = req.params.id;
 
-  Tutorial.findByPk(id)
+  Article.findByPk(id)
     .then((data:any) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorial with id=${id}.`
+          message: `Cannot find Article with id=${id}.`
         });
       }
     })
     .catch((err:any) => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id
+        message: "Error retrieving Article with id=" + id
       });
     });
 };
@@ -71,23 +71,23 @@ const findOne = (req:any, res:any) => {
 const update = (req:any, res:any) => {
   const id = req.params.id;
 
-  Tutorial.update(req.body, {
+  Article.update(req.body, {
     where: { id: id }
   })
     .then((num:any) => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully."
+          message: "Article was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+          message: `Cannot update Article with id=${id}. Maybe Article was not found or req.body is empty!`
         });
       }
     })
     .catch((err:any) => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: "Error updating Article with id=" + id
       });
     });
 };
@@ -95,29 +95,29 @@ const update = (req:any, res:any) => {
 const deleteT = (req:any, res:any) => {
   const id = req.params.id;
 
-  Tutorial.destroy({
+  Article.destroy({
     where: { id: id }
   })
     .then((num:any) => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was deleted successfully!"
+          message: "Article was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+          message: `Cannot delete Article with id=${id}. Maybe Article was not found!`
         });
       }
     })
     .catch((err:any) => {
       res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id
+        message: "Could not delete Article with id=" + id
       });
     });
 };
 
 const deleteAll = (req:any, res:any) => {
-  Tutorial.destroy({
+  Article.destroy({
     where: {},
     truncate: false
   })
@@ -133,7 +133,7 @@ const deleteAll = (req:any, res:any) => {
 };
 
 const findAllPublished = (req:any, res:any) => {
-  Tutorial.findAll({ where: { published: true } })
+  Article.findAll({ where: { published: true } })
     .then((data:any) => {
       res.send(data);
     })

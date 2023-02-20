@@ -17,6 +17,8 @@ const sequelize = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlCon
 
 const article = articleModelFunc(sequelize)
 const tag = tagModelFunc(sequelize)
+article.belongsToMany(tag, { through: 'articleTag' });
+tag.belongsToMany(article, { through: 'articleTag' });
 
 const mysqlObject = {
   Sequelize: Sequelize,
