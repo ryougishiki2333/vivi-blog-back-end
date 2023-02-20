@@ -1,19 +1,24 @@
-import { STRING, INTEGER, BLOB } from "sequelize"
+import { STRING, INTEGER, BLOB, Sequelize } from "sequelize";
+import { ArticleModel } from "../types/dataType";
 
-const articleModelFunc = (sequelize:any) => {
-  const Article = sequelize.define("Article", {
+const articleModelFunc = (sequelize: Sequelize) => {
+  const Article = sequelize.define<ArticleModel>("Article", {
+    id: {
+      primaryKey: true,
+      type: INTEGER.UNSIGNED,
+    },
     title: {
-      type: STRING
+      type: STRING,
     },
     content: {
-      type: STRING
+      type: STRING,
     },
     articleState: {
-      type: INTEGER
-    }
+      type: INTEGER,
+    },
   });
 
   return Article;
 };
 
-export default articleModelFunc
+export default articleModelFunc;

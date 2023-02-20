@@ -1,7 +1,12 @@
-import { STRING } from "sequelize"
+import { Sequelize, INTEGER, STRING } from "sequelize"
+import { TagModel } from "../types/dataType"
 
-const tagModelFunc = (sequelize:any) => {
-  const Tag = sequelize.define("Tag", {
+const tagModelFunc = (sequelize: Sequelize) => {
+  const Tag = sequelize.define<TagModel>("Tag", {
+    id: {
+      primaryKey: true,
+      type: INTEGER.UNSIGNED,
+    },
     name: {
       type: STRING
     }

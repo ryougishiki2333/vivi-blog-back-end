@@ -1,8 +1,9 @@
 import mysqlObject from "../database/mysql";
-import { Op } from "sequelize"
+import { Op } from "sequelize";
+import { Request, Response } from "express";
 const Article = mysqlObject.article;
 // Create and Save a new Article
-const create = (req: any, res: any) => {
+const create = (req: Request, res: Response) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -12,18 +13,18 @@ const create = (req: any, res: any) => {
   }
 
   // Create a Article
-  const tutorial = {
+  const article = {
     title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    content: req.body.content,
+    articleState: req.body.articleState,
   };
 
   // Save Article in the database
-  Article.create(tutorial)
+  Article.create(article)
     .then((data: any) => {
       res.send(data);
     })
-    .catch((err: any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Article.",
@@ -32,9 +33,9 @@ const create = (req: any, res: any) => {
 };
 
 // Retrieve all Tutorials from the database.
-const findAll = (req: any, res: any) => {
+const findAll = (req: Request, res: Response) => {
   const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  var condition = { title: { [Op.like]: `%${title}%` } }
 
   Article.findAll({ where: condition })
     .then((data: any) => {
@@ -48,102 +49,109 @@ const findAll = (req: any, res: any) => {
     });
 };
 
-const findOne = (req:any, res:any) => {
+const findOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Article.findByPk(id)
-    .then((data:any) => {
+    .then((data: any) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Article with id=${id}.`
+          message: `Cannot find Article with id=${id}.`,
         });
       }
     })
-    .catch((err:any) => {
+    .catch((err: Error) => {
       res.status(500).send({
-        message: "Error retrieving Article with id=" + id
+        message: "Error retrieving Article with id=" + id,
       });
     });
 };
 
-const update = (req:any, res:any) => {
+const update = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Article.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
-    .then((num:any) => {
+    .then((num: any) => {
       if (num == 1) {
         res.send({
-          message: "Article was updated successfully."
+          message: "Article was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Article with id=${id}. Maybe Article was not found or req.body is empty!`
+          message: `Cannot update Article with id=${id}. Maybe Article was not found or req.body is empty!`,
         });
       }
     })
-    .catch((err:any) => {
+    .catch((err: Error) => {
       res.status(500).send({
-        message: "Error updating Article with id=" + id
+        message: "Error updating Article with id=" + id,
       });
     });
 };
 
-const deleteT = (req:any, res:any) => {
+const deleteT = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Article.destroy({
-    where: { id: id }
+    where: { id: id },
   })
-    .then((num:any) => {
+    .then((num: any) => {
       if (num == 1) {
         res.send({
-          message: "Article was deleted successfully!"
+          message: "Article was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Article with id=${id}. Maybe Article was not found!`
+          message: `Cannot delete Article with id=${id}. Maybe Article was not found!`,
         });
       }
     })
-    .catch((err:any) => {
+    .catch((err: Error) => {
       res.status(500).send({
-        message: "Could not delete Article with id=" + id
+        message: "Could not delete Article with id=" + id,
       });
     });
 };
 
-const deleteAll = (req:any, res:any) => {
+const deleteAll = (req: Request, res: Response) => {
   Article.destroy({
     where: {},
-    truncate: false
+    truncate: false,
   })
-    .then((nums:any) => {
+    .then((nums: any) => {
       res.send({ message: `${nums} Tutorials were deleted successfully!` });
     })
-    .catch((err:any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all tutorials."
+          err.message || "Some error occurred while removing all tutorials.",
       });
     });
 };
 
-const findAllPublished = (req:any, res:any) => {
-  Article.findAll({ where: { published: true } })
-    .then((data:any) => {
-      res.send(data);
-    })
-    .catch((err:any) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
+// const findAllPublished = (req: Request, res: Response) => {
+//   Article.findAll({ where: { published: true } })
+//     .then((data: any) => {
+//       res.send(data);
+//     })
+//     .catch((err: Error) => {
+//       res.status(500).send({
+//         message:
+//           err.message || "Some error occurred while retrieving tutorials.",
+//       });
+//     });
+// };
+
+export {
+  create,
+  findAll,
+  findOne,
+  update,
+  deleteT,
+  deleteAll,
+  // findAllPublished,
 };
-
-export { create, findAll, findOne, update, deleteT, deleteAll, findAllPublished };
-
