@@ -1,27 +1,29 @@
-import { create, findAll, findOne, update, deleteT, deleteAll, findAllPublished } from "../controllers/articleController";
+import { articleCreate,
+  articleFindAll,
+  articleFindOne,
+  articleUpdate,
+  articleDelete,
+  articleDeleteAll, } from "../controllers/articleController";
 import express from "express";
 
 const router = express.Router();
 
   // Create a new Tutorial
-  router.post("/", create);
+  router.post("/", articleCreate);
 
   // Retrieve all Tutorials
-  router.get("/", findAll);
-
-  // Retrieve all published Tutorials
-  router.get("/published", findAllPublished);
+  router.get("/", articleFindAll);
 
   // Retrieve a single Tutorial with id
-  router.get("/:id", findOne);
+  router.get("/:id", articleFindOne);
 
   // Update a Tutorial with id
-  router.put("/:id", update);
+  router.put("/:id", articleUpdate);
 
   // Delete a Tutorial with id
-  router.delete("/:id", deleteT);
+  router.delete("/:id", articleDelete);
 
   // Delete all Tutorials
-  router.delete("/", deleteAll);
+  router.delete("/", articleDeleteAll);
 
 export default router;

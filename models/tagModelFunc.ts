@@ -4,6 +4,7 @@ import { TagModel } from "../types/dataType"
 const tagModelFunc = (sequelize: Sequelize) => {
   const Tag = sequelize.define<TagModel>("Tag", {
     id: {
+      autoIncrement: true,
       primaryKey: true,
       type: INTEGER.UNSIGNED,
     },

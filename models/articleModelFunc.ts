@@ -4,6 +4,7 @@ import { ArticleModel } from "../types/dataType";
 const articleModelFunc = (sequelize: Sequelize) => {
   const Article = sequelize.define<ArticleModel>("Article", {
     id: {
+      autoIncrement: true,
       primaryKey: true,
       type: INTEGER.UNSIGNED,
     },

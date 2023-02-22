@@ -3,7 +3,7 @@ import { Op } from "sequelize";
 import { Request, Response } from "express";
 const Article = mysqlObject.article;
 // Create and Save a new Article
-const create = (req: Request, res: Response) => {
+const articleCreate = async (req: Request, res: Response) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -21,10 +21,10 @@ const create = (req: Request, res: Response) => {
 
   // Save Article in the database
   Article.create(article)
-    .then((data: any) => {
+    .then((data) => {
       res.send(data);
     })
-    .catch((err: Error) => {
+    .catch((err) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Article.",
@@ -33,11 +33,11 @@ const create = (req: Request, res: Response) => {
 };
 
 // Retrieve all Tutorials from the database.
-const findAll = (req: Request, res: Response) => {
-  const title = req.query.title;
-  var condition = { title: { [Op.like]: `%${title}%` } }
+const articleFindAll = (req: Request, res: Response) => {
+  // const title = req.query.title ? ;
+  // var condition = { title: { [Op.like]: `%${title}%` } }
 
-  Article.findAll({ where: condition })
+  Article.findAll()
     .then((data: any) => {
       res.send(data);
     })
@@ -49,7 +49,7 @@ const findAll = (req: Request, res: Response) => {
     });
 };
 
-const findOne = (req: Request, res: Response) => {
+const articleFindOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Article.findByPk(id)
@@ -69,7 +69,7 @@ const findOne = (req: Request, res: Response) => {
     });
 };
 
-const update = (req: Request, res: Response) => {
+const articleUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Article.update(req.body, {
@@ -93,7 +93,7 @@ const update = (req: Request, res: Response) => {
     });
 };
 
-const deleteT = (req: Request, res: Response) => {
+const articleDelete = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Article.destroy({
@@ -117,7 +117,7 @@ const deleteT = (req: Request, res: Response) => {
     });
 };
 
-const deleteAll = (req: Request, res: Response) => {
+const articleDeleteAll = (req: Request, res: Response) => {
   Article.destroy({
     where: {},
     truncate: false,
@@ -147,11 +147,11 @@ const deleteAll = (req: Request, res: Response) => {
 // };
 
 export {
-  create,
-  findAll,
-  findOne,
-  update,
-  deleteT,
-  deleteAll,
+  articleCreate,
+  articleFindAll,
+  articleFindOne,
+  articleUpdate,
+  articleDelete,
+  articleDeleteAll,
   // findAllPublished,
 };

@@ -12,7 +12,7 @@ export interface ArticleModel
     InferAttributes<ArticleModel>,
     InferCreationAttributes<ArticleModel>
   > {
-  id: number;
+  id: CreationOptional<number>;
   title: string;
   content: string;
   articleState: string;
@@ -23,7 +23,7 @@ export interface TagModel
     InferAttributes<TagModel>,
     InferCreationAttributes<TagModel>
   > {
-  id: number;
+  id: CreationOptional<number>;
   name: string;
 
 }
