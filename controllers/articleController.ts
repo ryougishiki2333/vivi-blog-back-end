@@ -27,12 +27,12 @@ const articleCreate = async (req: Request, res: Response) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Article.",
+          err.message || "Some error occurred while creating the article.",
       });
     });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all articles from the database.
 const articleFindAll = (req: Request, res: Response) => {
   // const title = req.query.title ? ;
   // var condition = { title: { [Op.like]: `%${title}%` } }
@@ -44,7 +44,7 @@ const articleFindAll = (req: Request, res: Response) => {
     .catch((err: any) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials.",
+          err.message || "Some error occurred while retrieving articles.",
       });
     });
 };
@@ -58,13 +58,13 @@ const articleFindOne = (req: Request, res: Response) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Article with id=${id}.`,
+          message: `Cannot find article with id=${id}.`,
         });
       }
     })
     .catch((err: Error) => {
       res.status(500).send({
-        message: "Error retrieving Article with id=" + id,
+        message: "Error retrieving article with id=" + id,
       });
     });
 };
@@ -82,13 +82,13 @@ const articleUpdate = (req: Request, res: Response) => {
         });
       } else {
         res.send({
-          message: `Cannot update Article with id=${id}. Maybe Article was not found or req.body is empty!`,
+          message: `Cannot update article with id=${id}. Maybe article was not found or req.body is empty!`,
         });
       }
     })
     .catch((err: Error) => {
       res.status(500).send({
-        message: "Error updating Article with id=" + id,
+        message: "Error updating article with id=" + id,
       });
     });
 };
@@ -106,7 +106,7 @@ const articleDelete = (req: Request, res: Response) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Article with id=${id}. Maybe Article was not found!`,
+          message: `Cannot delete article with id=${id}. Maybe article was not found!`,
         });
       }
     })
@@ -123,12 +123,12 @@ const articleDeleteAll = (req: Request, res: Response) => {
     truncate: false,
   })
     .then((nums: any) => {
-      res.send({ message: `${nums} Tutorials were deleted successfully!` });
+      res.send({ message: `${nums} Articles were deleted successfully!` });
     })
     .catch((err: Error) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all tutorials.",
+          err.message || "Some error occurred while removing all articles.",
       });
     });
 };
@@ -141,7 +141,7 @@ const articleDeleteAll = (req: Request, res: Response) => {
 //     .catch((err: Error) => {
 //       res.status(500).send({
 //         message:
-//           err.message || "Some error occurred while retrieving tutorials.",
+//           err.message || "Some error occurred while retrieving articles.",
 //       });
 //     });
 // };

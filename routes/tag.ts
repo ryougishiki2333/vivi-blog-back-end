@@ -1,28 +1,29 @@
-import {  tagCreate ,
-  tagFindAll, } from "../controllers/tagController";
+import {  tagCreate,
+  tagFindAll,
+  tagFindOne,
+  tagUpdate,
+  tagDelete,
+  tagDeleteAll } from "../controllers/tagController";
 import express from "express";
 
 const router = express.Router();
 
-  // Create a new Tutorial
+  // Create a new tag
   router.post("/", tagCreate);
 
-  // Retrieve all Tutorials
+  // Retrieve all tags
   router.get("/", tagFindAll);
 
-//   // Retrieve all published Tutorials
-//   router.get("/published", findAllPublished);
+  // Retrieve a single tag with id
+  router.get("/:id", tagFindOne);
 
-//   // Retrieve a single Tutorial with id
-//   router.get("/:id", findOne);
+  // Update a tag with id
+  router.put("/:id", tagUpdate);
 
-//   // Update a Tutorial with id
-//   router.put("/:id", update);
+  // Delete a tag with id
+  router.delete("/:id", tagDelete);
 
-//   // Delete a Tutorial with id
-//   router.delete("/:id", deleteT);
-
-//   // Delete all Tutorials
-//   router.delete("/", deleteAll);
+  // Delete all tags
+  router.delete("/", tagDeleteAll);
 
 export default router;  

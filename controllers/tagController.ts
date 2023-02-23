@@ -15,7 +15,7 @@ const tagCreate = async (req: Request, res: Response) => {
     name: req.body.name,
   };
 
-  // Save Article in the database
+  // Save tag in the database
   Tag.create(tag)
     .then((data) => {
       res.send(data);
@@ -45,92 +45,92 @@ const tagFindAll = (req: Request, res: Response) => {
     });
 };
 
-// const articleFindOne = (req: Request, res: Response) => {
-//   const id = req.params.id;
+const tagFindOne = (req: Request, res: Response) => {
+  const id = req.params.id;
 
-//   Article.findByPk(id)
-//     .then((data: any) => {
-//       if (data) {
-//         res.send(data);
-//       } else {
-//         res.status(404).send({
-//           message: `Cannot find Article with id=${id}.`,
-//         });
-//       }
-//     })
-//     .catch((err: Error) => {
-//       res.status(500).send({
-//         message: "Error retrieving Article with id=" + id,
-//       });
-//     });
-// };
+  Tag.findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find tag with id=${id}.`,
+        });
+      }
+    })
+    .catch((err: Error) => {
+      res.status(500).send({
+        message: "Error retrieving tag with id=" + id,
+      });
+    });
+};
 
-// const articleUpdate = (req: Request, res: Response) => {
-//   const id = req.params.id;
+const tagUpdate = (req: Request, res: Response) => {
+  const id = req.params.id;
 
-//   Article.update(req.body, {
-//     where: { id: id },
-//   })
-//     .then((num: any) => {
-//       if (num == 1) {
-//         res.send({
-//           message: "Article was updated successfully.",
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot update Article with id=${id}. Maybe Article was not found or req.body is empty!`,
-//         });
-//       }
-//     })
-//     .catch((err: Error) => {
-//       res.status(500).send({
-//         message: "Error updating Article with id=" + id,
-//       });
-//     });
-// };
+  Tag.update(req.body, {
+    where: { id: id },
+  })
+    .then((num: any) => {
+      if (num == 1) {
+        res.send({
+          message: "Tag was updated successfully.",
+        });
+      } else {
+        res.send({
+          message: `Cannot update tag with id=${id}. Maybe tag was not found or req.body is empty!`,
+        });
+      }
+    })
+    .catch((err: Error) => {
+      res.status(500).send({
+        message: "Error updating tag with id=" + id,
+      });
+    });
+};
 
-// const articleDelete = (req: Request, res: Response) => {
-//   const id = req.params.id;
+const tagDelete = (req: Request, res: Response) => {
+  const id = req.params.id;
 
-//   Article.destroy({
-//     where: { id: id },
-//   })
-//     .then((num: any) => {
-//       if (num == 1) {
-//         res.send({
-//           message: "Article was deleted successfully!",
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot delete Article with id=${id}. Maybe Article was not found!`,
-//         });
-//       }
-//     })
-//     .catch((err: Error) => {
-//       res.status(500).send({
-//         message: "Could not delete Article with id=" + id,
-//       });
-//     });
-// };
+  Tag.destroy({
+    where: { id: id },
+  })
+    .then((num: any) => {
+      if (num == 1) {
+        res.send({
+          message: "Tag was deleted successfully!",
+        });
+      } else {
+        res.send({
+          message: `Cannot delete tag with id=${id}. Maybe tag was not found!`,
+        });
+      }
+    })
+    .catch((err: Error) => {
+      res.status(500).send({
+        message: "Could not delete tag with id=" + id,
+      });
+    });
+};
 
-// const articleDeleteAll = (req: Request, res: Response) => {
-//   Article.destroy({
-//     where: {},
-//     truncate: false,
-//   })
-//     .then((nums: any) => {
-//       res.send({ message: `${nums} Tutorials were deleted successfully!` });
-//     })
-//     .catch((err: Error) => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while removing all tutorials.",
-//       });
-//     });
-// };
+const tagDeleteAll = (req: Request, res: Response) => {
+  Tag.destroy({
+    where: {},
+    truncate: false,
+  })
+    .then((nums: any) => {
+      res.send({ message: `${nums} Tags were deleted successfully!` });
+    })
+    .catch((err: Error) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all tutorials.",
+      });
+    });
+};
 
 // // const findAllPublished = (req: Request, res: Response) => {
-// //   Article.findAll({ where: { published: true } })
+// //   tag.findAll({ where: { published: true } })
 // //     .then((data: any) => {
 // //       res.send(data);
 // //     })
@@ -143,7 +143,11 @@ const tagFindAll = (req: Request, res: Response) => {
 // // };
 
 export {
-  tagCreate ,
+  tagCreate,
   tagFindAll,
+  tagFindOne,
+  tagUpdate,
+  tagDelete,
+  tagDeleteAll
   // findAllPublished,
 };
