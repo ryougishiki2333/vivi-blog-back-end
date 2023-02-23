@@ -1,13 +1,14 @@
-// import { create, findAll, findOne, update, deleteT, deleteAll, findAllPublished } from "../controllers/articleController";
-// import express from "express";
+import {  tagCreate ,
+  tagFindAll, } from "../controllers/tagController";
+import express from "express";
 
-// const router = express.Router();
+const router = express.Router();
 
-//   // Create a new Tutorial
-//   router.post("/", create);
+  // Create a new Tutorial
+  router.post("/", tagCreate);
 
-//   // Retrieve all Tutorials
-//   router.get("/", findAll);
+  // Retrieve all Tutorials
+  router.get("/", tagFindAll);
 
 //   // Retrieve all published Tutorials
 //   router.get("/published", findAllPublished);
@@ -24,4 +25,4 @@
 //   // Delete all Tutorials
 //   router.delete("/", deleteAll);
 
-// export default router;
+export default router;  
