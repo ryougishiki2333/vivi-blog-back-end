@@ -20,25 +20,26 @@ const articleCreate = async (req: Request, res: Response) => {
     articleState: req.body.articleState,
   };
 
-  // const tag = req.body.tag
-  // if (tag && tag.length > 0) {
-    
-  // }
-  // const newArticle = await Article.create(article)
+  const newArticle = await Article.create(article)
+  const tag = req.body.tag
+  if (tag && tag.length > 0) {
+    console.log(newArticle);
+    newArticle.addTags(tag)
+  }
   // console.log(Article);
   
   
   // Save Article in the database
-  Article.create(article)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the article.",
-      });
-    });
+  // Article.create(article)
+  //   .then((data) => {
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while creating the article.",
+  //     });
+  //   });
 };
 
 // Retrieve all articles from the database.

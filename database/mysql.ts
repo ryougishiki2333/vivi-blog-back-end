@@ -1,7 +1,6 @@
 import mysqlConfig from "./databaseConfig"
-import { Sequelize, STRING } from "sequelize"
-import articleModelFunc from "../models/articleModelFunc"
-import tagModelFunc from "../models/tagModelFunc"
+import { Sequelize, STRING, DataTypes } from "sequelize"
+import { Article, Tag } from "../types/dataType";
 
 const sequelize = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlConfig.password, {
   host: mysqlConfig.host,
@@ -15,26 +14,65 @@ const sequelize = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlCon
   }
 });
 
-const article = articleModelFunc(sequelize)
-const tag = tagModelFunc(sequelize)
-article.belongsToMany(tag, { through: 'articleTag' });
-tag.belongsToMany(article, { through: 'articleTag' });
+Article.init({
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    articleState:{
+      type: DataTypes.INTEGER.UNSIGNED,
+    },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
+  }, {
+    sequelize,
+    tableName: 'articles'
+  })
 
+Tag.init({
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
+  }, {
+    sequelize,
+    tableName: 'tags'
+  })
 
-// test
+Article.belongsToMany(Tag, { through: 'articleTag', as: 'Tag' });
+Tag.belongsToMany(Article, { through: 'articleTag', as: 'Article' });
 
-const Foo = sequelize.define('Foo', { name: STRING });
-const Bar = sequelize.define('Bar', { name: STRING });
-Foo.belongsToMany(Bar, { through: 'FooBar' });
-Bar.belongsToMany(Foo, { through: 'FooBar' });
+sequelize.sync({alter: true })
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
-// test
+await Tag.create({name:'23333'})
 
 const mysqlObject = {
   Sequelize: Sequelize,
   sequelize: sequelize,
-  article: article,
-  tag: tag
+  article: Article,
+  tag: Tag
 };
 
 export default mysqlObject

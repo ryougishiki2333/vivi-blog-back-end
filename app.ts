@@ -19,14 +19,6 @@ app.use(cors()); // 注入cors模块解决跨域
 
 app.use("/", routes);
 
-db.sequelize.sync({force: true })
-  .then(() => {
-    console.log("Synced db.");
-  })
-  .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
-  });
-
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
