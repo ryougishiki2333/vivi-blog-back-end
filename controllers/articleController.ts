@@ -2,12 +2,13 @@ import mysqlObject from "../database/mysql";
 import { Op } from "sequelize";
 import { Request, Response } from "express";
 const Article = mysqlObject.article;
+const Tag = mysqlObject.tag;
 // Create and Save a new Article
 const articleCreate = async (req: Request, res: Response) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.title || !req.body.content || !req.body.articleState) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Article items can not be empty!",
     });
     return;
   }
@@ -19,6 +20,14 @@ const articleCreate = async (req: Request, res: Response) => {
     articleState: req.body.articleState,
   };
 
+  // const tag = req.body.tag
+  // if (tag && tag.length > 0) {
+    
+  // }
+  // const newArticle = await Article.create(article)
+  // console.log(Article);
+  
+  
   // Save Article in the database
   Article.create(article)
     .then((data) => {
@@ -34,10 +43,9 @@ const articleCreate = async (req: Request, res: Response) => {
 
 // Retrieve all articles from the database.
 const articleFindAll = (req: Request, res: Response) => {
-  // const title = req.query.title ? ;
-  // var condition = { title: { [Op.like]: `%${title}%` } }
-
-  Article.findAll()
+  const title = req.query.title ? req.query.title: '';
+  const condition = { title: { [Op.like]: `%${title}%` } }
+  Article.findAll({where: condition, include: Tag})
     .then((data: any) => {
       res.send(data);
     })
@@ -51,7 +59,6 @@ const articleFindAll = (req: Request, res: Response) => {
 
 const articleFindOne = (req: Request, res: Response) => {
   const id = req.params.id;
-
   Article.findByPk(id)
     .then((data: any) => {
       if (data) {

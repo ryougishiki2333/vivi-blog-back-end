@@ -19,7 +19,7 @@ app.use(cors()); // 注入cors模块解决跨域
 
 app.use("/", routes);
 
-db.sequelize.sync({alter: true })
+db.sequelize.sync({force: true })
   .then(() => {
     console.log("Synced db.");
   })
