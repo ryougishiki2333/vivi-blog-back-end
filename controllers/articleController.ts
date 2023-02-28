@@ -44,7 +44,7 @@ const articleCreate = async (req: Request, res: Response) => {
 // Retrieve all articles from the database.
 const articleFindAll = (req: Request, res: Response) => {
   // 应该有条件拼凑的部分
-  Article.findAll({include: Tag })
+  Article.findAll({include: 'Tag' })
     .then((data) => {
       res.send(data);
     })
@@ -58,7 +58,7 @@ const articleFindAll = (req: Request, res: Response) => {
 
 const articleFindOne = (req: Request, res: Response) => {
   const id = req.params.id;
-  Article.findByPk(id, {include: Tag })
+  Article.findByPk(id, {include: 'Tag' })
     .then((data) => {
       if (data) {
         res.send(data);

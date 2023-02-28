@@ -1,6 +1,8 @@
 
 import mysqlConfig from "./databaseConfig";
-import { Sequelize, STRING, DataTypes } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
+import articleConfig from "./articleConfig";
+import tagConfig from "./tagConfig";
 import { Article, Tag } from "../types/dataType";
 
 const sequelize = new Sequelize(
@@ -21,26 +23,7 @@ const sequelize = new Sequelize(
 );
 
 Article.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    articleState: {
-      type: DataTypes.INTEGER.UNSIGNED,
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  },
+  articleConfig,
   {
     sequelize,
     tableName: "articles",
@@ -48,19 +31,7 @@ Article.init(
 );
 
 Tag.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  },
+  tagConfig,
   {
     sequelize,
     tableName: "tags",
