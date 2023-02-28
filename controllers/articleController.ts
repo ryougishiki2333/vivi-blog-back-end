@@ -1,6 +1,6 @@
 import mysqlObject from "../database/mysql";
 import { Op } from "sequelize";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 const Article = mysqlObject.article;
 const Tag = mysqlObject.tag;
 // Create and Save a new Article
@@ -20,37 +20,35 @@ const articleCreate = async (req: Request, res: Response) => {
     articleState: req.body.articleState,
   };
 
-  const newArticle = await Article.create(article)
-  const tag = req.body.tag
-  if (tag && tag.length > 0) {
-    console.log(newArticle);
-    newArticle.addTags(tag)
+  const tag = req.body.tag;
+  const newArticle = await Article.create(article);
+  try {
+    if (tag && tag.length > 0) {
+      const condition = { name: { [Op.or]: tag } };
+      const tagInSQL = await Tag.findAll({ where: condition });
+      await newArticle.setTag(tagInSQL);
+      const newArticleInSQL = await Article.findByPk(newArticle.id, {
+        include: 'Tag',
+      });
+      res.send(newArticleInSQL);
+    } else {
+      res.send(newArticle);
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the article.",
+    });
   }
-  // console.log(Article);
-  
-  
-  // Save Article in the database
-  // Article.create(article)
-  //   .then((data) => {
-  //     res.send(data);
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while creating the article.",
-  //     });
-  //   });
 };
 
 // Retrieve all articles from the database.
 const articleFindAll = (req: Request, res: Response) => {
-  const title = req.query.title ? req.query.title: '';
-  const condition = { title: { [Op.like]: `%${title}%` } }
-  Article.findAll({where: condition, include: Tag})
-    .then((data: any) => {
+  // 应该有条件拼凑的部分
+  Article.findAll({include: Tag })
+    .then((data) => {
       res.send(data);
     })
-    .catch((err: any) => {
+    .catch((err) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving articles.",
@@ -60,8 +58,8 @@ const articleFindAll = (req: Request, res: Response) => {
 
 const articleFindOne = (req: Request, res: Response) => {
   const id = req.params.id;
-  Article.findByPk(id)
-    .then((data: any) => {
+  Article.findByPk(id, {include: Tag })
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
@@ -70,7 +68,7 @@ const articleFindOne = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err: Error) => {
+    .catch((err) => {
       res.status(500).send({
         message: "Error retrieving article with id=" + id,
       });
@@ -79,8 +77,14 @@ const articleFindOne = (req: Request, res: Response) => {
 
 const articleUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
-
-  Article.update(req.body, {
+  const article = {
+    title: req.body.title,
+    content: req.body.content,
+    articleState: req.body.articleState,
+  };
+  const tag = req.body.tag;
+  // 这里应该有编辑tag的部分
+  Article.update(article, {
     where: { id: id },
   })
     .then((num: any) => {
@@ -103,7 +107,7 @@ const articleUpdate = (req: Request, res: Response) => {
 
 const articleDelete = (req: Request, res: Response) => {
   const id = req.params.id;
-
+  // 这里应该有删除关联表的部分
   Article.destroy({
     where: { id: id },
   })
@@ -141,19 +145,6 @@ const articleDeleteAll = (req: Request, res: Response) => {
     });
 };
 
-// const findAllPublished = (req: Request, res: Response) => {
-//   Article.findAll({ where: { published: true } })
-//     .then((data: any) => {
-//       res.send(data);
-//     })
-//     .catch((err: Error) => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving articles.",
-//       });
-//     });
-// };
-
 export {
   articleCreate,
   articleFindAll,
@@ -161,5 +152,4 @@ export {
   articleUpdate,
   articleDelete,
   articleDeleteAll,
-  // findAllPublished,
 };

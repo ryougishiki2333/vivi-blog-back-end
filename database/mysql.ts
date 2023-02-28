@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 import mysqlConfig from "./databaseConfig";
 import { Sequelize, STRING, DataTypes } from "sequelize";
@@ -71,11 +70,11 @@ Tag.init(
 Article.belongsToMany(Tag, { through: "articleTag", as: "Tag" });
 Tag.belongsToMany(Article, { through: "articleTag", as: "Article" });
 
-
-const Foo = sequelize.define('Foo', { name: DataTypes.STRING });
-const Bar = sequelize.define('Bar', { name: DataTypes.STRING });
-Foo.belongsToMany(Bar, { through: 'FooBar' });
-Bar.belongsToMany(Foo, { through: 'FooBar' });
+// 测试代码
+// const Foo = sequelize.define('Foo', { name: DataTypes.STRING });
+// const Bar = sequelize.define('Bar', { name: DataTypes.STRING });
+// Foo.belongsToMany(Bar, { through: 'FooBar' });
+// Bar.belongsToMany(Foo, { through: 'FooBar' });
 
 sequelize
   .sync({ alter: true })

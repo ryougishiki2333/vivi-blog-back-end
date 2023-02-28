@@ -32,15 +32,12 @@ export class Article extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  declare getTags: BelongsToManyGetAssociationsMixin<Tag>;
+  declare getTag: BelongsToManyGetAssociationsMixin<Tag>;
   declare addTag: BelongsToManyAddAssociationMixin<Tag, number>;
-  declare addTags: BelongsToManyAddAssociationsMixin<Tag, number>;
-  declare setTags: BelongsToManySetAssociationsMixin<Tag, number>;
+  declare setTag: BelongsToManySetAssociationsMixin<Tag, number>;
   declare removeTag: BelongsToManyRemoveAssociationMixin<Tag, number>;
-  declare removeTags: BelongsToManyRemoveAssociationsMixin<Tag, number>;
   declare hasTag: BelongsToManyHasAssociationMixin<Tag, number>;
-  declare hasTags: BelongsToManyHasAssociationsMixin<Tag, number>;
-  declare countTags: BelongsToManyCountAssociationsMixin;
+  declare countTag: BelongsToManyCountAssociationsMixin;
 
   declare tags?: NonAttribute<Tag[]>;
 
@@ -58,14 +55,11 @@ export class Tag
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  declare getArticles: BelongsToManyGetAssociationsMixin<Article>;
+  declare getArticle: BelongsToManyGetAssociationsMixin<Article>;
   declare addArticle: BelongsToManyAddAssociationMixin<Article, number>;
-  declare addArticles: BelongsToManyAddAssociationsMixin<Article, number>;
-  declare setArticles: BelongsToManySetAssociationsMixin<Article, number>;
+  declare setArticle: BelongsToManySetAssociationsMixin<Article, number>;
   declare removeArticle: BelongsToManyRemoveAssociationMixin<Article, number>;
-  declare removeArticles: BelongsToManyRemoveAssociationsMixin<Article, number>;
   declare hasArticle: BelongsToManyHasAssociationMixin<Article, number>;
-  declare hasArticles: BelongsToManyHasAssociationsMixin<Article, number>;
   declare countArticles: BelongsToManyCountAssociationsMixin;
 
   declare articles?: NonAttribute<Article[]>;
