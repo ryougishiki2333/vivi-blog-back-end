@@ -28,7 +28,7 @@ const articleCreate = async (req: Request, res: Response) => {
       const tagInSQL = await Tag.findAll({ where: condition });
       await newArticle.setTag(tagInSQL);
       const newArticleInSQL = await Article.findByPk(newArticle.id, {
-        include: 'Tag',
+        include: "Tag",
       });
       res.send(newArticleInSQL);
     } else {
@@ -43,8 +43,11 @@ const articleCreate = async (req: Request, res: Response) => {
 
 // Retrieve all articles from the database.
 const articleFindAll = (req: Request, res: Response) => {
-  // 应该有条件拼凑的部分
-  Article.findAll({include: 'Tag' })
+  let condition = {};
+  if (req.query) {
+    condition = { ...req.query };
+  }
+  Article.findAll({ include: "Tag", where: condition })
     .then((data) => {
       res.send(data);
     })
@@ -58,7 +61,7 @@ const articleFindAll = (req: Request, res: Response) => {
 
 const articleFindOne = (req: Request, res: Response) => {
   const id = req.params.id;
-  Article.findByPk(id, {include: 'Tag' })
+  Article.findByPk(id, { include: "Tag" })
     .then((data) => {
       if (data) {
         res.send(data);

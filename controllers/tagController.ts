@@ -30,9 +30,6 @@ const tagCreate = async (req: Request, res: Response) => {
 
 // Retrieve all Tags from the database.
 const tagFindAll = (req: Request, res: Response) => {
-//   const title = req.query.title;
-//   var condition = { title: { [Op.like]: `%${title}%` } }
-
   Tag.findAll()
     .then((data: any) => {
       res.send(data);
