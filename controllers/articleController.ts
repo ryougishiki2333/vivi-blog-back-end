@@ -102,21 +102,6 @@ const articleUpdate = async (req: Request, res: Response) => {
       message: "Error updating article with id=" + id,
     });
   }
-
-  // Article.update(article, {
-  //   where: { id: id },
-  // })
-  //   .then((num: any) => {
-  //     if (num == 1) {
-  //       res.send({
-  //         message: "Article was updated successfully.",
-  //       });
-  //     } else {
-  //       res.send({
-  //         message: `Cannot update article with id=${id}. Maybe article was not found or req.body is empty!`,
-  //       });
-  //     }
-  //   })
 };
 
 const articleDelete = (req: Request, res: Response) => {
