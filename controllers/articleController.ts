@@ -3,26 +3,22 @@ import { Op } from "sequelize";
 import { Request, response, Response } from "express";
 const Article = mysqlObject.article;
 const Tag = mysqlObject.tag;
-// Create and Save a new Article
+
 const articleCreate = async (req: Request, res: Response) => {
-  // Validate request
   if (!req.body.title || !req.body.content || !req.body.articleState) {
     res.status(400).send({
       message: "Article items can not be empty!",
     });
     return;
   }
-
-  // Create a Article
   const article = {
     title: req.body.title,
     content: req.body.content,
     articleState: req.body.articleState,
   };
-
   const tag = req.body.tag;
-  const newArticle = await Article.create(article);
   try {
+    const newArticle = await Article.create(article);
     if (tag && tag.length > 0) {
       const condition = { name: { [Op.or]: tag } };
       const tagInSQL = await Tag.findAll({ where: condition });
@@ -41,7 +37,6 @@ const articleCreate = async (req: Request, res: Response) => {
   }
 };
 
-// Retrieve all articles from the database.
 const articleFindAll = (req: Request, res: Response) => {
   let condition = {};
   if (req.query) {
@@ -78,7 +73,7 @@ const articleFindOne = (req: Request, res: Response) => {
     });
 };
 
-const articleUpdate = (req: Request, res: Response) => {
+const articleUpdate = async (req: Request, res: Response) => {
   const id = req.params.id;
   const article = {
     title: req.body.title,
@@ -86,26 +81,42 @@ const articleUpdate = (req: Request, res: Response) => {
     articleState: req.body.articleState,
   };
   const tag = req.body.tag;
-  // 这里应该有编辑tag的部分
-  Article.update(article, {
-    where: { id: id },
-  })
-    .then((num: any) => {
-      if (num == 1) {
-        res.send({
-          message: "Article was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update article with id=${id}. Maybe article was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err: Error) => {
-      res.status(500).send({
-        message: "Error updating article with id=" + id,
-      });
+  try {
+    await Article.update(article, {
+      where: { id: id },
     });
+    if (tag && tag.length > 0) {
+      const newArticleInSQL = await Article.findByPk(id, {
+        include: "Tag",
+      });
+      const condition = { name: { [Op.or]: tag } };
+      const tagInSQL = await Tag.findAll({ where: condition });
+      await newArticleInSQL.setTag(tagInSQL);
+      const newArticleInSQLAgain = await Article.findByPk(id, {
+        include: "Tag",
+      });
+      res.send(newArticleInSQLAgain)
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating article with id=" + id,
+    });
+  }
+
+  // Article.update(article, {
+  //   where: { id: id },
+  // })
+  //   .then((num: any) => {
+  //     if (num == 1) {
+  //       res.send({
+  //         message: "Article was updated successfully.",
+  //       });
+  //     } else {
+  //       res.send({
+  //         message: `Cannot update article with id=${id}. Maybe article was not found or req.body is empty!`,
+  //       });
+  //     }
+  //   })
 };
 
 const articleDelete = (req: Request, res: Response) => {
