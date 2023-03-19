@@ -68,7 +68,7 @@ const articleFindOne = (req: Request, res: Response) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving article with id=" + id,
+        message: "Error retrieving article with id=" + id + ".",
       });
     });
 };
@@ -99,7 +99,7 @@ const articleUpdate = async (req: Request, res: Response) => {
     }
   } catch (err) {
     res.status(500).send({
-      message: "Error updating article with id=" + id,
+      message: "Error updating article with id=" + id + ".",
     });
   }
 };
@@ -123,7 +123,7 @@ const articleDelete = (req: Request, res: Response) => {
     })
     .catch((err: Error) => {
       res.status(500).send({
-        message: "Could not delete Article with id=" + id,
+        message: "Could not delete Article with id=" + id + ".",
       });
     });
 };

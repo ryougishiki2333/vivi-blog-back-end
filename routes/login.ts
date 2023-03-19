@@ -15,13 +15,13 @@ router.post("/login", (req:any, res:any, next:any) => {
     // payload：签发的 token 里面要包含的一些数据
     { username },
     // 私钥
-    "caowj",
+    "ryougishiki",
     // 设置过期时间
     { expiresIn: 60 * 60 * 24 } //1 day
   );
 
   res.json({
-    msg: "登录成功",
+    msg: "Login successfully!",
     data: { token },
   });
 });

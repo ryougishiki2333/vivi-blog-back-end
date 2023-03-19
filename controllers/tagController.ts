@@ -57,7 +57,7 @@ const tagFindOne = (req: Request, res: Response) => {
     })
     .catch((err: Error) => {
       res.status(500).send({
-        message: "Error retrieving tag with id=" + id,
+        message: `Error retrieving tag with id=${id}.`,
       });
     });
 };
@@ -81,7 +81,7 @@ const tagUpdate = (req: Request, res: Response) => {
     })
     .catch((err: Error) => {
       res.status(500).send({
-        message: "Error updating tag with id=" + id,
+        message: "Error updating tag with id=" + id + ".",
       });
     });
 };
@@ -105,7 +105,7 @@ const tagDelete = (req: Request, res: Response) => {
     })
     .catch((err: Error) => {
       res.status(500).send({
-        message: "Could not delete tag with id=" + id,
+        message: "Could not delete tag with id=" +  id + ".",
       });
     });
 };
