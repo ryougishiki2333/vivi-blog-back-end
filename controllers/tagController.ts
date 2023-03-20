@@ -1,6 +1,7 @@
 import mysqlObject from "../database/mysql";
 import { Op } from "sequelize";
 import { Request, Response } from "express";
+
 const Tag = mysqlObject.tag;
 const tagCreate = async (req: Request, res: Response) => {
   // Validate request

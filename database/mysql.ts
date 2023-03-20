@@ -3,7 +3,8 @@ import mysqlConfig from "./databaseConfig";
 import { Sequelize, DataTypes } from "sequelize";
 import articleConfig from "./articleConfig";
 import tagConfig from "./tagConfig";
-import { Article, Tag } from "../types/dataType";
+import userConfig from "./userConfig"
+import { Article, Tag, User } from "../types/dataType";
 
 const sequelize = new Sequelize(
   mysqlConfig.database,
@@ -38,6 +39,14 @@ Tag.init(
   }
 );
 
+User.init(
+  userConfig,
+  {
+    sequelize,
+    tableName: "users",
+  }
+);
+
 Article.belongsToMany(Tag, { through: "articleTag", as: "Tag" });
 Tag.belongsToMany(Article, { through: "articleTag", as: "Article" });
 
@@ -57,6 +66,7 @@ const mysqlObject = {
   sequelize: sequelize,
   article: Article,
   tag: Tag,
+  user: User
 };
 
 export default mysqlObject;

@@ -68,3 +68,16 @@ export class Tag
     tags: Association<Tag, Article>;
   };
 }
+
+export class User
+  extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+
+  declare id: CreationOptional<number>;
+  declare username: string;
+  declare password: string;
+  declare type: string;
+
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
+
