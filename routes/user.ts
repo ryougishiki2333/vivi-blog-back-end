@@ -1,3 +1,14 @@
+import express from "express";
+import { register, login } from "../controllers/userController";
+
+const router = express.Router(); //模块化路由
+
+router.post("/register", register);
+
+router.post("/login", login);
+
+export default router;
+
 // import upload from "../util/upload";
 // import express from "express";
 // import userController from "../controllers/userController";
@@ -15,6 +26,3 @@
 //   console.log(req.file);
 //   res.send("success");
 // });
-
-// export default router;
-
