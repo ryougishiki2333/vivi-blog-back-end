@@ -17,29 +17,29 @@ app.use(cors()); // 注入cors模块解决跨域
 app.use(jwtAuth)
 app.use("/", routes);
 
-app.use((err:any, req:any, res:any, next:any) => {
-  // 自定义用户认证失败的错误返回
-  console.log("err===", err);
-  if (err && err.name === "UnauthorizedError") {
-    const { status = 401, message } = err;
-    // 抛出401异常
-    res.status(status).json({
-      code: status,
-      msg: "Token error, please login again.",
-      data: null,
-    });
-  } else {
-    const { output } = err || {};
-    // 错误码和错误信息
-    const errCode = (output && output.statusCode) || 500;
-    const errMsg =
-      (output && output.payload && output.payload.error) || err.message;
-    res.status(errCode).json({
-      code: errCode,
-      msg: errMsg,
-    });
-  }
-});
+// app.use((err:any, req:any, res:any, next:any) => {
+//   // 自定义用户认证失败的错误返回
+//   console.log("err===", err);
+//   if (err && err.name === "UnauthorizedError") {
+//     const { status = 401, message } = err;
+//     // 抛出401异常
+//     res.status(status).json({
+//       code: status,
+//       msg: "Token error, please login again.",
+//       data: null,
+//     });
+//   } else {
+//     const { output } = err || {};
+//     // 错误码和错误信息
+//     const errCode = (output && output.statusCode) || 500;
+//     const errMsg =
+//       (output && output.payload && output.payload.error) || err.message;
+//     res.status(errCode).json({
+//       code: errCode,
+//       msg: errMsg,
+//     });
+//   }
+// });
 
 const PORT = 4000;
 app.listen(PORT, () => {

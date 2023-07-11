@@ -1,4 +1,4 @@
-import { expressjwt as jwt }from "express-jwt"
+import { expressjwt as jwt } from "express-jwt"
 
 // 验证token是否过期
 const jwtAuth = jwt({
