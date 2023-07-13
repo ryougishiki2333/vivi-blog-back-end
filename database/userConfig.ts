@@ -15,6 +15,11 @@ export default {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: "email"
+  },
   type: {
     type: DataTypes.STRING,
     allowNull: false,

@@ -5,31 +5,56 @@ import mysqlObject from "../database/mysql";
 const User = mysqlObject.user;
 
 const register = (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   // Validate request
-  if (!username || !password) {
+  if (!username || !password || !email) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
     return;
   }
 
-  const user = {
+  const userInfo = {
     username: username,
     password: password,
-    type: "visitor",
+    email: email,
   };
 
   // Save tag in the database
-  User.create(user)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the tag.",
+  User.findOne({
+    where: {
+      username: username
+    }
+  }).then((user) => {
+    if (user) {
+      res.status(400).send({
+        message: "Failed! Username is already in use!"
       });
-    });
+      return
+    }
+    User.findOne({
+      where: {
+        email: email
+      }
+    }).then((user) => {
+      if (user) {
+        res.status(400).send({
+          message: "Failed! Email is already in use!"
+        });
+        return
+      }
+    })
+  })
+
+  // User.create(user)
+  //   .then((data) => {
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({
+  //       message: err.message || "Some error occurred while creating the tag.",
+  //     });
+  //   });
 };
 
 const login = async (req: Request, res: Response) => {
@@ -53,8 +78,8 @@ const login = async (req: Request, res: Response) => {
         });
       } else {
         res.status(401).send({
-        message: "Password is wrong!",
-      });
+          message: "Password is wrong!",
+        });
       }
     } else {
       res.status(401).send({

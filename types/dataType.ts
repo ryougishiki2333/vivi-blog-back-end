@@ -76,6 +76,7 @@ export class User
   declare username: string;
   declare password: string;
   declare type: string;
+  declare email: string;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
