@@ -74,7 +74,7 @@ const login = async (req: Request, res: Response) => {
         );
         res.json({
           message: "Login successfully!",
-          data: { token },
+          data: { token, username: username, displayName: 'Vivi', type: 2, avatar: '' },
         });
       } else {
         res.status(401).send({
