@@ -75,7 +75,7 @@ export class User
   declare id: CreationOptional<number>;
   declare username: string;
   declare password: string;
-  declare type: string;
+  declare type: number;
   declare email: string;
 
   declare createdAt: CreationOptional<Date>;

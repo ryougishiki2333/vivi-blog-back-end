@@ -14,47 +14,49 @@ const register = (req: Request, res: Response) => {
     return;
   }
 
-  const userInfo = {
-    username: username,
-    password: password,
-    email: email,
-  };
-
   // Save tag in the database
   User.findOne({
     where: {
-      username: username
-    }
+      username: username,
+    },
   }).then((user) => {
     if (user) {
       res.status(400).send({
-        message: "Failed! Username is already in use!"
+        message: "Failed! Username is already in use!",
       });
-      return
+      return;
     }
     User.findOne({
       where: {
-        email: email
-      }
+        email: email,
+      },
     }).then((user) => {
       if (user) {
         res.status(400).send({
-          message: "Failed! Email is already in use!"
+          message: "Failed! Email is already in use!",
         });
-        return
+        return;
       }
-    })
-  })
 
-  // User.create(user)
-  //   .then((data) => {
-  //     res.send(data);
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send({
-  //       message: err.message || "Some error occurred while creating the tag.",
-  //     });
-  //   });
+      const userInfo = {
+        username: username,
+        password: password,
+        email: email,
+        displayName: username,
+        type: 1
+      };
+      User.create(userInfo)
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating the tag.",
+          });
+        });
+    });
+  });
 };
 
 const login = async (req: Request, res: Response) => {
@@ -74,7 +76,13 @@ const login = async (req: Request, res: Response) => {
         );
         res.json({
           message: "Login successfully!",
-          data: { token, username: username, displayName: 'Vivi', type: 2, avatar: '' },
+          data: {
+            token,
+            username: username,
+            displayName: "Vivi",
+            type: 2,
+            avatar: "",
+          },
         });
       } else {
         res.status(401).send({
