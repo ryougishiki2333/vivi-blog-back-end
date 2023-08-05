@@ -7,12 +7,12 @@ const User = mysqlObject.user;
 const register = (req: Request, res: Response) => {
   const { username, password, email } = req.body;
   // Validate request
-  if (!username || !password || !email) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+  // if (!username || !password || !email) {
+  //   res.status(400).send({
+  //     message: "Content can not be empty!",
+  //   });
+  //   return;
+  // }
 
   // Save tag in the database
   User.findOne({
@@ -20,31 +20,32 @@ const register = (req: Request, res: Response) => {
       username: username,
     },
   }).then((user) => {
-    if (user) {
-      res.status(400).send({
-        message: "Failed! Username is already in use!",
-      });
-      return;
-    }
+    // if (user) {
+    //   res.status(400).send({
+    //     message: "Failed! Username is already in use!",
+    //   });
+    //   return;
+    // }
     User.findOne({
       where: {
         email: email,
       },
     }).then((user) => {
-      if (user) {
-        res.status(400).send({
-          message: "Failed! Email is already in use!",
-        });
-        return;
-      }
+      // if (user) {
+      //   res.status(400).send({
+      //     message: "Failed! Email is already in use!",
+      //   });
+      //   return;
+      // }
 
       const userInfo = {
-        username: username,
-        password: password,
-        email: email,
-        displayName: username,
+        username: username ? username : "anonymous",
+        password: "password",
+        email: email? email : '',
+        displayName: username ? username : "anonymous",
         type: 1
       };
+
       User.create(userInfo)
         .then((data) => {
           res.send(data);
@@ -52,7 +53,7 @@ const register = (req: Request, res: Response) => {
         .catch((err) => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while creating the tag.",
+              err.message || "Some error occurred while creating the user.",
           });
         });
     });

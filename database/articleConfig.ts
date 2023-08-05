@@ -18,6 +18,10 @@ export default {
     articleState: {
       type: DataTypes.INTEGER.UNSIGNED,
     },
+    synopsis:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   }

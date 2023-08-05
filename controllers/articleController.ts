@@ -5,7 +5,7 @@ const Article = mysqlObject.article;
 const Tag = mysqlObject.tag;
 
 const articleCreate = async (req: Request, res: Response) => {
-  if (!req.body.title || !req.body.content || !req.body.articleState) {
+  if (!req.body.title || !req.body.content || !req.body.articleState || !req.body.synopsis) {
     res.status(400).send({
       message: "Article items can not be empty!",
     });
@@ -15,6 +15,7 @@ const articleCreate = async (req: Request, res: Response) => {
     title: req.body.title,
     content: req.body.content,
     articleState: req.body.articleState,
+    synopsis: req.body.synopsis
   };
   const tag = req.body.tag;
   try {

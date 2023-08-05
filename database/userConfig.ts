@@ -9,7 +9,12 @@ export default {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: "username",
+    // unique: "username",
+  },
+  displayName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    // unique: "username",
   },
   password: {
     type: DataTypes.STRING,
@@ -18,7 +23,7 @@ export default {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: "email"
+    // unique: "email"
   },
   type: {
     type: DataTypes.STRING,

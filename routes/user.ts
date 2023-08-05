@@ -5,7 +5,7 @@ const router = express.Router(); //模块化路由
 
 router.post("/register", register);
 
-router.post("/login", login);
+// router.post("/login", login);
 
 export default router;
 
