@@ -1,0 +1,17 @@
+version: '3'
+services:
+  vivi-back:
+    ports: 
+      - '4000:4000'
+    restart: on-failure
+    build: .
+  db:
+
+    image: mysql:8.0
+    ports: 
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: liaotingwei
+      MYSQL_DATABASE: manage
+    restart: on-failure
+
