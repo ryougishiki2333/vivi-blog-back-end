@@ -21,7 +21,6 @@ export default {
     },
     replyUserId:{
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
     },
     userId:{
       type: DataTypes.INTEGER.UNSIGNED,
@@ -32,8 +31,7 @@ export default {
       allowNull: false,
     },
     email:{
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,

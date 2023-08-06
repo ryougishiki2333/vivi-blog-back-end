@@ -1,17 +1,19 @@
-version: '3'
+version: "3"
 services:
   vivi-back:
-    ports: 
-      - '4000:4000'
+    ports:
+      - "4000:4000"
     restart: on-failure
     build: .
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=docker
   db:
-
     image: mysql:8.0
-    ports: 
-      - '3306:3306'
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: liaotingwei
       MYSQL_DATABASE: manage
     restart: on-failure
-

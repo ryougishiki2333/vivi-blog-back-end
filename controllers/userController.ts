@@ -4,6 +4,19 @@ import mysqlObject from "../database/mysql";
 
 const User = mysqlObject.user;
 
+const userFindOne = (req: Request, res: Response) => {
+  const id = req.params.id;
+  User.findByPk(id).then((data) => {
+    if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find article with id=${id}.`,
+        });
+      }
+  });
+};
+
 const register = (req: Request, res: Response) => {
   const { username, password, email } = req.body;
   // Validate request
@@ -41,9 +54,9 @@ const register = (req: Request, res: Response) => {
       const userInfo = {
         username: username ? username : "anonymous",
         password: "password",
-        email: email? email : '',
+        email: email ? email : "",
         displayName: username ? username : "anonymous",
-        type: 1
+        type: 1,
       };
 
       User.create(userInfo)
@@ -102,4 +115,4 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-export { register, login };
+export { register, login, userFindOne };

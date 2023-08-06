@@ -1,13 +1,11 @@
 import express from "express";
-import { register, login, userFindOne } from "../controllers/userController";
+import { replyCreate, replyGetAll } from "../controllers/replyController";
 
 const router = express.Router(); //模块化路由
 
-router.post("/register", register);
+router.post("/", replyCreate);
 
-router.get("/", userFindOne);
-
-// router.post("/login", login);
+router.get("/", replyGetAll);
 
 export default router;
 
@@ -17,7 +15,7 @@ export default router;
 
 // const router = express.Router();
 
-
+// router.get("/user/json", userController.getuser);
 
 // router.get("/list", userController.list);
 

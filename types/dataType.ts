@@ -82,3 +82,18 @@ export class User
   declare updatedAt: CreationOptional<Date>;
 }
 
+export class Reply
+  extends Model<InferAttributes<Reply>, InferCreationAttributes<Reply>> {
+
+  declare id: CreationOptional<number>;
+  declare content: string;
+  declare username: string;
+  declare state: number;
+  declare replyUserId: number;
+  declare userId: number;
+  declare articleId: number;
+
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
+
