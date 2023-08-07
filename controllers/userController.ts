@@ -5,13 +5,15 @@ import mysqlObject from "../database/mysql";
 const User = mysqlObject.user;
 
 const userFindOne = (req: Request, res: Response) => {
-  const id = req.params.id;
-  User.findByPk(id).then((data) => {
+  const id = req.query.id;
+  console.log(id);
+  
+  User.findByPk(id.toString()).then((data) => {
     if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find article with id=${id}.`,
+          message: `Cannot find user with id=${id}.`,
         });
       }
   });
