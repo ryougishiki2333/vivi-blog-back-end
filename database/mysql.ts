@@ -56,7 +56,7 @@ Reply.init(
   }
 );
 
-Article.belongsToMany(Tag, { through: "articleTag", as: "Tag" });
+Article.belongsToMany(Tag, { through: "articleTag", as: "tag" });
 Tag.belongsToMany(Article, { through: "articleTag", as: "Article" });
 
 

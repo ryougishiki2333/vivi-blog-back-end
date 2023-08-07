@@ -5,7 +5,12 @@ const Article = mysqlObject.article;
 const Tag = mysqlObject.tag;
 
 const articleCreate = async (req: Request, res: Response) => {
-  if (!req.body.title || !req.body.content || !req.body.articleState || !req.body.synopsis) {
+  if (
+    !req.body.title ||
+    !req.body.content ||
+    !req.body.articleState ||
+    !req.body.synopsis
+  ) {
     res.status(400).send({
       message: "Article items can not be empty!",
     });
@@ -15,7 +20,7 @@ const articleCreate = async (req: Request, res: Response) => {
     title: req.body.title,
     content: req.body.content,
     articleState: req.body.articleState,
-    synopsis: req.body.synopsis
+    synopsis: req.body.synopsis,
   };
   const tag = req.body.tag;
   try {
@@ -43,7 +48,7 @@ const articleFindAll = (req: Request, res: Response) => {
   if (req.query) {
     condition = { ...req.query };
   }
-  Article.findAll({ include: "Tag", where: condition })
+  Article.findAll({ include: { model: Tag, as: "tag" }, where: condition })
     .then((data) => {
       res.send(data);
     })
@@ -96,7 +101,7 @@ const articleUpdate = async (req: Request, res: Response) => {
       const newArticleInSQLAgain = await Article.findByPk(id, {
         include: "Tag",
       });
-      res.send(newArticleInSQLAgain)
+      res.send(newArticleInSQLAgain);
     }
   } catch (err) {
     res.status(500).send({
