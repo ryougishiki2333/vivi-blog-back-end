@@ -61,7 +61,7 @@ Tag.belongsToMany(Article, { through: "articleTag", as: "Article" });
 
 
 sequelize
-  .sync({ alter: true })
+  .sync({ alter: false })
   .then(() => {
     console.log("Synced db.");
   })

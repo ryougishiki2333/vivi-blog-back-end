@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import mysqlObject from "../database/mysql";
+import { Op } from "sequelize";
+import { log } from "console";
 
 const User = mysqlObject.user;
 const Reply = mysqlObject.reply;
 
 const replyGetAll = async (req: Request, res: Response) => {
-
   let condition = {};
   if (req.query) {
     condition = { ...req.query };
@@ -21,7 +22,23 @@ const replyGetAll = async (req: Request, res: Response) => {
           err.message || "Some error occurred while retrieving articles.",
       });
     });
-}
+};
+
+const replyGetByArticleId = async (req: Request, res: Response) => {
+
+  const id = req.query.id;
+  console.log(id)
+  Reply.findAll({ where: { articleId: id[0] } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving articles.",
+      });
+    });
+};
 
 const replyCreate = async (req: Request, res: Response) => {
   if (!req.body.content) {
@@ -49,4 +66,4 @@ const replyCreate = async (req: Request, res: Response) => {
   }
 };
 
-export { replyCreate, replyGetAll };
+export { replyCreate, replyGetAll, replyGetByArticleId };

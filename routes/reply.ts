@@ -1,11 +1,13 @@
 import express from "express";
-import { replyCreate, replyGetAll } from "../controllers/replyController";
+import { replyCreate, replyGetAll, replyGetByArticleId } from "../controllers/replyController";
 
 const router = express.Router(); //模块化路由
 
 router.post("/", replyCreate);
 
-router.get("/", replyGetAll);
+router.get("/", replyGetByArticleId);
+
+// router.get("/", replyGetAll);
 
 export default router;
 

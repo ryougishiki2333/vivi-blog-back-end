@@ -6,8 +6,6 @@ const User = mysqlObject.user;
 
 const userFindOne = (req: Request, res: Response) => {
   const id = req.query.id;
-  console.log(id);
-  
   User.findByPk(id.toString()).then((data) => {
     if (data) {
         res.send(data);
