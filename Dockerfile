@@ -4,7 +4,7 @@ WORKDIR /back-end
 
 COPY . .
 
-RUN npm i --registry=http://mirrors.cloud.tencent.com/npm/
+RUN npm i 
 
 RUN npm run build
 
