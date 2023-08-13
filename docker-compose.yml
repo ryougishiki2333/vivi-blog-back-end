@@ -3,10 +3,11 @@ services:
   vivi-back:
     ports:
       - "4000:4000"
-    restart: on-failure
+    restart: always
     build: .
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - NODE_ENV=docker
   db:
@@ -18,4 +19,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: liaotingwei
       MYSQL_DATABASE: manage
-    restart: on-failure
+    restart: always
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 3s
+            retries: 10
