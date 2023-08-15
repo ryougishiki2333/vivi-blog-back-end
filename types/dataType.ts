@@ -27,7 +27,7 @@ export class Article extends Model<
   declare id: CreationOptional<number>;
   declare title: string;
   declare content: string;
-  declare articleState: string;
+  declare articleState: number;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;

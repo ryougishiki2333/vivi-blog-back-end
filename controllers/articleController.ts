@@ -8,7 +8,6 @@ const articleCreate = async (req: Request, res: Response) => {
   if (
     !req.body.title ||
     !req.body.content ||
-    !req.body.articleState ||
     !req.body.synopsis
   ) {
     res.status(400).send({
@@ -19,7 +18,7 @@ const articleCreate = async (req: Request, res: Response) => {
   const article = {
     title: req.body.title,
     content: req.body.content,
-    articleState: req.body.articleState,
+    articleState: 1,
     synopsis: req.body.synopsis,
   };
   const tag = req.body.tag;
@@ -80,25 +79,36 @@ const articleFindOne = (req: Request, res: Response) => {
 };
 
 const articleUpdate = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  if (
+    !req.body.title ||
+    !req.body.content ||
+    !req.body.synopsis
+  ) {
+    res.status(400).send({
+      message: "Article items can not be empty!",
+    });
+    return;
+  }
+  const id = req.query.id;
   const article = {
     title: req.body.title,
     content: req.body.content,
-    articleState: req.body.articleState,
+    articleState: 1,
+    synopsis: req.body.synopsis,
   };
   const tag = req.body.tag;
   try {
     await Article.update(article, {
-      where: { id: id },
+      where: { id: id.toString() },
     });
     if (tag && tag.length > 0) {
-      const newArticleInSQL = await Article.findByPk(id, {
+      const newArticleInSQL = await Article.findByPk(id.toString(), {
         include: "Tag",
       });
       const condition = { name: { [Op.or]: tag } };
       const tagInSQL = await Tag.findAll({ where: condition });
       await newArticleInSQL.setTag(tagInSQL);
-      const newArticleInSQLAgain = await Article.findByPk(id, {
+      const newArticleInSQLAgain = await Article.findByPk(id.toString(), {
         include: "Tag",
       });
       res.send(newArticleInSQLAgain);

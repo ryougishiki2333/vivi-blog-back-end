@@ -27,7 +27,6 @@ const replyGetAll = async (req: Request, res: Response) => {
 const replyGetByArticleId = async (req: Request, res: Response) => {
 
   const id = req.query.id;
-  console.log(id)
   Reply.findAll({ where: { articleId: id[0] } })
     .then((data) => {
       res.send(data);

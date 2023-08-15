@@ -18,7 +18,7 @@ const router = express.Router();
   router.get("/:id", articleFindOne);
 
   // Update a article with id
-  router.put("/:id", articleUpdate);
+  router.put("/", articleUpdate);
 
   // Delete a article with id
   router.delete("/:id", articleDelete);
