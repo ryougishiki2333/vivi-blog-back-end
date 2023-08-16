@@ -21,7 +21,7 @@ const router = express.Router();
   router.put("/:id", tagUpdate);
 
   // Delete a tag with id
-  router.delete("/:id", tagDelete);
+  router.delete("/", tagDelete);
 
   // Delete all tags
   router.delete("/", tagDeleteAll);

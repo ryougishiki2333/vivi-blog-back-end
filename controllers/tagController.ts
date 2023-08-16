@@ -88,7 +88,7 @@ const tagUpdate = (req: Request, res: Response) => {
 };
 
 const tagDelete = (req: Request, res: Response) => {
-  const id = req.params.id;
+  const id = parseInt(req.query.id as string);
 
   Tag.destroy({
     where: { id: id },

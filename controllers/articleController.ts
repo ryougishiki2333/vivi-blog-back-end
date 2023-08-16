@@ -25,17 +25,23 @@ const articleCreate = async (req: Request, res: Response) => {
   try {
     const newArticle = await Article.create(article);
     if (tag && tag.length > 0) {
-      const condition = { name: { [Op.or]: tag } };
-      const tagInSQL = await Tag.findAll({ where: condition });
-      await newArticle.setTag(tagInSQL);
       const newArticleInSQL = await Article.findByPk(newArticle.id, {
-        include: "Tag",
+        include: "tag",
       });
-      res.send(newArticleInSQL);
+      const tagId = tag.map((tagItem)=>{return tagItem.id})
+      const condition = { id: { [Op.or]: tagId } };
+      const tagInSQL = await Tag.findAll({where: condition});
+      await newArticleInSQL.setTag(tagInSQL);
+      const newArticleInSQLAgain = await Article.findByPk(newArticle.id, {
+        include: "tag",
+      });
+      res.send(newArticleInSQLAgain);
     } else {
       res.send(newArticle);
     }
   } catch (err) {
+    console.log(err);
+    
     res.status(500).send({
       message: err.message || "Some error occurred while creating the article.",
     });
@@ -89,33 +95,36 @@ const articleUpdate = async (req: Request, res: Response) => {
     });
     return;
   }
-  const id = req.query.id;
+  const id = req.query.id as string;
   const article = {
     title: req.body.title,
     content: req.body.content,
     articleState: 1,
-    synopsis: req.body.synopsis,
+    synopsis: req.body.synopsis
   };
   const tag = req.body.tag;
   try {
-    await Article.update(article, {
-      where: { id: id.toString() },
+    const articleUpdateAfter = await Article.update(article, {
+      where: { id: parseInt(id) },
     });
     if (tag && tag.length > 0) {
-      const newArticleInSQL = await Article.findByPk(id.toString(), {
-        include: "Tag",
+      const newArticleInSQL = await Article.findByPk(parseInt(id), {
+        include: "tag",
       });
-      const condition = { name: { [Op.or]: tag } };
-      const tagInSQL = await Tag.findAll({ where: condition });
+      const tagId = tag.map((tagItem)=>{return tagItem.id})
+      const condition = { id: { [Op.or]: tagId } };
+      const tagInSQL = await Tag.findAll({where: condition});
       await newArticleInSQL.setTag(tagInSQL);
-      const newArticleInSQLAgain = await Article.findByPk(id.toString(), {
-        include: "Tag",
+      const newArticleInSQLAgain = await Article.findByPk(parseInt(id), {
+        include: "tag",
       });
       res.send(newArticleInSQLAgain);
+    } else {
+      res.send(articleUpdateAfter);
     }
   } catch (err) {
     res.status(500).send({
-      message: "Error updating article with id=" + id + ".",
+      message: err.message || "Error updating article with id=" + id + ".",
     });
   }
 };
